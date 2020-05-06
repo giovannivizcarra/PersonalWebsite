@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% block content %}
+   <div class="LEDHARP">
+     <h1>LED HARP</h1>
+     <img src="/static/LEDHARP1.png">
+     <img src="/static/LEDHARP2.png">
+     
+     <h4>Abstract</h4>
+     <p>For our final project we combined our love of music with our love of physics and engineering to
+design and create a 5 stringed LED harp. The LED harp is meant to mock an ordinary harp
+except instead of depending on string vibrations, our project uses a modulated light signal and
+sensors to produce sound. We used a small single board computer (Raspberry Pi) and an analog
+to digital converter (MCP3008) to monitor the output voltage of five photodetectors (
+designed with individual bandpass filters set to detect the individual light signals emitted by the
+LED’s. In turn, the LEDs are driven by relaxation oscillator such that the light signal is emitted
+at certain frequencies to account for the dispersion of light.</p>
+     <h4>Introduction</h4>
+     <p>By applying the concepts, we obtain in Physics 111a we set out to design a project that showed the elegance and precision behind physics and engineering. We wanted to show how multidisciplinary physics and engineering are by applying our knowledge of circuits to our love for music by creating a LED Harp. Our project was inspired by a project we found online which uses a coherent light source to create a Laser Harp, https://github.com/phyzicist/twang.
+
+<p>Our project pushed our understanding of circuits by forcing us to think of outside of the box to reach solutions to different issues we encountered along the way. Through these experiences we have pushed our understanding of topics such as: relaxation oscillators, bandpass filters, push pull drivers, programing, optics, single board computers, analog to digital converters, followers, voltage dividers, diodes, and light dependent resistors.</p> 
+
+<p>One of the most challenging aspects of the project was definitely learning how to connect our knowledge of the course to design a project that uses a Raspberry Pi, to monitor our experiment. Raspberry Pi’s are an extremely powerful but sensitive tool, and learning how to combine the circuit theory we obtained from the course, to design a project controlled by lab based parts and circuits was definitely a challenge, but accomplishing this was proof of our understanding of the concepts in the course. As we had to take under account different limitations from the raspberry pi when hooking up our circuits to prevent damage to the equipment. 
+
+In the following we will further discuss theory behind our experiment. I will then briefly talk about the circuits we actually used for our project as well as any errors we made along the way. </p>
+	<img src="/static/figure1.png">
+	<figure>
+	<figcaption>Figure.1 - Picture of the Laser harp right after calibration. The circuit on the top is producing a modulated signal that the LED’s on the top of the box are receiving to produce light at specific frequencies that can then be picked up by the photodetectors below..</figcaption>
+	</figure>
+	<h4>Theory</h4>
+    <p>Our project tapped into key concepts from every lab we had in the course besides Lab 9 which was the Lab View based lab. Here I will talk about the theory behind each component starting off with an overview of the design theory	
+ 	<p>Our 5 note LED harp depends on a modulated signal produced by five different relaxation oscillators which drives the 5 LED’s at certain frequencies. The modulated light signal is then picked up by five individual photodetectors that are connected to five bandpass filters in order to differentiate each signal and note. We also used five biconvex lens which allowed us to focus the light on the photodetectors in order to account for the light dispersion from the LED’s since it is not a coherent light source. We then used an analog to digital converter controlled by a Raspberry Pi to monitor the output voltage of the photodetectors and act as a trigger so that the Raspberry Pi can simulate of a pluck in our LED harp. Originally we planned to use a push pull driver connected to simple speakers to output our sound; however, due to limitations with the speakers we had to make final adjustments as I will talk more about in the later part of this paper. Figure 2 shows the block diagram we created, which shows the basic theory of our project.</p>
+    <img src="/static/figure2.png">
+	<figure>
+	<figcaption>Figure.2 - Block Diagram </figcaption>
+	</figure>
+	<h4>Light Source Driven by Relaxation Oscillator</h4>
+    <p>As briefly stated the LED’s were driven by five different relaxation oscillators using the special purpose 555 chips mentioned in Lab 7-Op Amps II the entire circuit was hooked up to a 5V power supply. Figure 3 shows a circuit diagram of the relaxation oscillator circuit for an individual LED.
+    <img src="/static/figure3.png">
+	<figure>
+	<figcaption>Figure.3 - Relaxation Oscillator Circuit </figcaption>
+	</figure>
+ 	<p>Relaxation oscillators outputs consistent non sinusoidal signals, they take advantage of the fact that the output of the op amp is always trying to keep the input the same. Relaxation oscillator’s oscillations depends heavily on the discharge rate of the capacitors which is used to determine the frequency. Essentially the relaxation oscillator is hooked up to an LED which is then receiving the modulated signal produced by the relaxation oscillator. However, because of the discharge rate of the capacitors the LED is being powered on and off and a very fast rate. We set up the frequencies for the LED’s to range between 50Hz to 63,000 Hz. Figure 4 shows the different frequencies produced by the relaxation oscillator to each LED. </p>
+	<img src="/static/figure4.png">
+	<figure>
+	<figcaption>Figure.4 -Frequencies of each LED </figcaption>
+	</figure>
+	<p>By modulating the light signal with the relaxation oscillators we were able to take under account the dispersion of light caused by the non-coherency of our light source such that the photodetectors could be created to individually detect each modulated light source and differentiate it from the rest. Attaching relaxation oscillators also allowed us to make the ambient light negligible for the photodetectors as they were set to the frequencies of the LED’s. One of the biggest obstacles was having to reconstruct all five relaxation oscillators, because we had originally set the frequency range way to high and did not take under account the weak sampling rate of 200ksps of the ADC MCP3008 we were using. However, once realizing that the issue stemmed from the Nyquist rate we reduced the frequency range and produced successful results. Figure 5 is a picture of the relaxation oscillator circuit we used for our light source.</p>
+	<img src="/static/figure5a.png">
+	<figure>
+	<figcaption>Figure.5a -Relaxation Oscillator Circuit </figcaption>
+	</figure>
+	<img src="/static/figure5b.png">
+	<figure>
+	<figcaption>Figure.5b -Relaxation Oscillator Circuit </figcaption>
+	</figure>
+kreljfnkljr4fn
+	<h4>Bandpass Filters and Photodetectors</h4>
+    <p>Our relaxation oscillators would be useless without the incorporation of specific bandpass filters used to depict the modulated light source frequency from each LED. Bandpass filters were exactly what we needed because they allow certain signals through while attenuating the rest of the signals that are out of range. Bandpass filters are a combination of high and low pass filters which individually let either high or low frequency signals through. We were able to calculate the specific frequencies of the LED’s by using the following equation, Frequency = 1 / (2pi)RC . We set  our high and low cut off frequencies spaced out from the frequencies outputted by the LED’s such that we allowed room for error in detecting the signal. Figure 7 shows the frequency range we set the bandpass filters along with the capacitors and resistors we used.</p>
+    <img src="/static/figure6.png">
+	<figure>
+	<figcaption>Figure.7 - Filter Frequencies </figcaption>
+	</figure>	
+ 	<p>Each bandpass filter was connected to the current to voltage converter circuit in Lab 6 Op Amps I, in which we used OP802SL Photodetectors to transfer the current signal from the phototransistor into voltage signal. However, for our project Professor Reinsch recommended we use the OP805SL Photodetectors. The circuit also depends on the LF356 Op Amps to amplify the signal. In creating our phototransistor circuits, we originally also created five differential amplifiers. Differential amplifiers are meant to amplify the difference between two input voltages while reducing the noise. The differential amplifiers we built can be seen in to the right of our photodetector and bandpass filter circuit in Figure 9. Nonetheless, at the end of our project we rendered it unnecessary to use the differential amplifiers as changes in light are already significantly noticeable. Figure 8 demonstrates how we set up our photodetector and bandpass filter circuit.</p>
+ 	<figure>
+	<figcaption>Figure.8 - Photodetector Circuit </figcaption>
+	</figure> 
+    <img src="/static/figure7.png">
+    <img src="/static/figure8.png">
+	<figure>
+	<figcaption>Figure.9 - Photodetector Circuit. To the left you can see our five photodetectors and bandpass filters and to the right you can see the differential amplifiers we had built </figcaption>
+	</figure> </p>
+	<h4>Analog to Digital Converter and Raspberry Pi</h4>
+    <p>Conceptually speaking, analog to digital converters convert any voltage signal to digital data by sending on and off signals in the form of bits to computers. Bits are binary digits that can take values 1 and 0 which represent on and off. For our project we used the MCP3008 which is a 10 Bit Analog to Digital Converter which means that it has a resolution of 1024 steps. Which gave us a wide enough range of values for our purposes. The reason we used a different ADC from those offered in the lab is because we needed a ADC with at least 5 channels to monitor the five different voltages coming out of the photodetector circuit, and the ADC804 unfortunately only had one channel. In addition, the ADC804 only had 8 bits which means we would have only had a resolution of 256 which is a lot lower than what we wanted. We therefore used the analog to digital converter to monitor the output voltage of the photodetector circuit, and used voltage = (Vref*ADCout)/n to convert the ADC values to voltage. We used the circuit diagram in Figure 10 to measure the output voltage, we used eight 25k potentiometers in this circuit each of which were connected to a channel on the ADC. Three of the channels were grounded since we only needed five strings and the ADC we were using had eight channels.
+	<figure>
+	<figcaption>Figure.10 - ADC Measuring Voltage Circuit Diagram </figcaption>
+	</figure> 
+    <img src="/static/figure9.png">
+ 	<p>To oversee our monitoring/trigger system we used a Raspberry Pi Model 3B. Using a single board computer allowed us to create a program in python to monitor the analog to digital converter and set triggers to simulate the tone of a string being pluck when the voltage in the analog to digital converter changed. However, because we used a Raspberry Pi we had to take under account how delicate it was when connecting it to our circuits, and so we created five voltage dividers with 1k and 2.2k resistors to make sure that the voltage never exceeds the Raspberry Pi’s limit of 3.3V. The voltage dividers are meant to reduce the input voltage by at least a third. The voltage was never stronger than a volt; however, there were a few occasions where we had set up the power supplies incorrectly and noticed an output voltage of 12V, so we accounted for the worst. Figure 11 shows how we set up our circuit to measure voltage, the potentiometers on the top left are measuring the voltage of the photodetector circuit while the three potentiometers on the bottom right are connected to ground to not interfere with our measurements.</p>
+ 	<figure>
+	<figcaption>Figure.11 - ADC MCP3008 Set up Ready For Action. Potentiometers on the top left are measuring the voltage of the photodetector circuit while the three potentiometers on the bottom right are connected to ground to not interfere with our measurements. </figcaption>
+	</figure>
+    <img src="/static/figure10.png"> </p>
+
+    <h4>Setbacks and Mistakes</h4>
+    <p>Although we were successful in creating a LED harp we had a lot of setbacks that at times seemed we would not be able to finish. One setback was caused from our actual sound system. Our project was originally intended to have a sound system of its own by using the Push Pull driver circuit from Lab 8 – Op Amps III and connecting it to simple speakers to produce the sound effect to our LED harp. Originally we were going to simply use the circuit to the GPIO of our Raspberry Pi, however because the raspberry pi’s GPIO pins only output digital signal we would not have been able to get proper sound signals without including a DAC which would have taken a substantial amount of time. Nonetheless, we figured that we could potentially connect a 3.5mm TRRS Headphone Jack connecter to our push pull driver to connected to the Raspberry Pi’s Headphone Jack. After doing so we were finally able to output play music with the speaker, we connected the speaker to our phones first and tested it before connecting the headphone jack to the pi. However, we noticed that our phones started to react meaning there must me an excess leakage of voltage coming from our push pull driver. As a result, we set out to build a simple last minute follower to stabilize the output voltage coming out of the jack. Fortunately, this solved the issue regarding voltage; however, by the end of our project we were unable to use our speaker. Although it worked, we realized that there were uncalled for limitations on our actual speaker which did not allow us to play certain notes on the speaker due to their high frequencies. We confirmed our theory when we connected headphones to the raspberry pi and were able to hear all the notes playing clearly. Due to time restraints we were unable to fix it and decided to use a store bought plug in speaker to play the sound signals. If we had more time we would have invested the time and effort in better designing the speaker and taking under account, all the specs of the speaker and its range of frequencies we need it to perform at. Figure 12 shows an image of the push pull driver circuit we created.</p>
+    <p>
+    <img src="/static/figure11.png">
+    <figure>
+	<figcaption>Figure.12 - Our Sound System Originally Created For the LED Harp </figcaption>
+	</figure> </p>
+	<p>Another frustrating setback stemmed from using a high frequency range in our relaxation oscillator and bandpass filters. As a result, our ADC MCP3008 advertised sampling rate of 200ksps was not well suited for the frequencies we set our filters too. Such that our LED harp was plucking at inconsistent rates. To account for the fluctuations in our data we changed the frequencies we set our filters to. We also included a calibration stage to our program such that it will calculate the average value of 100 samples, to make our measurements more precise. In the end this seemed to nearly fix the issue however, we did encounter a lag due to the Raspberry Pi not being able to play multiple audio files at one.</p>
+	<h4>Conclusion</h4>
+    <p>Furthermore, our project was successful and was able to play five different notes when the lights were covered. Using averaging and variance formulas we were able to program the Raspberry Pi to trigger when the voltage values changed and reduce the response time significantly. Unfortunately, we were unable to fully fix the Pi’s ability to play multiple audio files at once however, for our purposes we were able to meet our goals. If allocating more time into this project, we would probably include an Averaging circuit or an RMS converter to get a pure signal. Nonetheless, we were satisfied with the result of our project.</p>
+	<h4>References</h4>
+	<ol>
+  		<li>Feister, Scott. “Phyzicist/Twang.” GitHub, 4 Nov. 2018, github.com/phyzicist/twang.</li>
+  		<li>“How to Hack a Headphone Jack.” Circuit Basics, 11 Apr. 2017, www.circuitbasics.com/how-to-hack-a-headphone-jack/.</li>
+  		<li>“2.7V 4-Channel/8-Channel 10-Bit A/D Converters with SPI Serial Interface.” Adafruit,    https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf </li>
+  		<li>Physics 111A Labs 1 - 11 https://instrumentationlab.berkeley.edu/</li>
+	</ol>
+	
+ {% endblock %}

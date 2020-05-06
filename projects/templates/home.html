@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="home">
+    <h1 style="color:black;">Background</h1>
+    <p style="font-size:100%;">University of California Berkeley
+    <p style="font-size:100%;">Physics BA Undergraduate</p>
+    <p style="font-size:100%;">gvizcarra@berkeley.edu</p>
+    <p style="font-size:100%;">3108087706</p>
+
+
+    </p>
+  </div>
+<head>
+<style>
+* 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+
+/* Create two columns/boxes that floats next to each other */
+
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 900px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  height: 900px; /* only for demonstration, should be removed */
+
+}
+
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+  <article>
+    <h1>About Me</h1>
+    <p>My name is Giovanni Vizcarra and I will be graduating in December 2019 with a B.A. degree in Physics at UC Berkeley. Here is a page of some of the work I have been able to do while at CAL along with my interests. I thought this would give recruiters a better understanding of my work. I am running the website I created on a raspberry pi back in my apartment in Berkeley.</p>
+
+  </article>
+
+</section>
+
+<footer>
+  <h4>Courses</h4>
+  <ul>
+  	<li>1. Computer Science C191:Quantum Information Science and Technology</li>
+  	<li>2. Physics 137A: Quantum Mechanics I </li>
+  	<li>3. Physics 137B: Quantum Mechanics II</li>
+  	<li>4. Physics 111A:Instrumentation Lab</li>
+    <li>5. Physics 111B:Instrumentation Lab</li>
+  	<li>6. Physics 105: Analytic Mechanics</li>
+ 	  <li>7. Physics 110A: Electromagnetism and Optics</li>
+    <li>8. Physics 112: Computational Methods for Physics</li>
+    <li>9. Physics 77: Computational Methods for Physics</li>
+
+  <h4>Interests</h4>
+
+    <li>1. Semiconductor Physics</li>
+    <li>2. Quantum Computing</li>
+    <li>3. AMO Physics</li>
+    <li>4. Sensors</li>
+    <li>5. Cryogenics</li>
+
+  <h4>Experience</h4>
+    <li>1. Semiconductor Physics</li>
+    <li>2. Quantum Computing </li>
+    <li>3. Sensors</li>
+    <li>4. Cryogenics</li>
+    <li>5. Raspberry Pi Devices</li>
+    <li>7. Running Experiements</li>
+    <li>8. Data Analysis in Python</li>
+
+  </ul>
+</footer>
+
+</body>
+</html>
+
+{% endblock %}
+
+
